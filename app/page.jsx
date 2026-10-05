@@ -4,6 +4,7 @@ import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import { useState } from "react";
 import PromptBox from "@/components/PromptBox";
+import Message from "@/components/Message";
 
 export default function Home() {
 
@@ -45,7 +46,9 @@ export default function Home() {
       </>
      ):
      (
-    <div></div>
+    <div>
+      <Message role='user' content='What is next js'/>
+    </div>
      )
     }
     <PromptBox isLoading={isLoading} setIsLoading={setIsLoading}/>

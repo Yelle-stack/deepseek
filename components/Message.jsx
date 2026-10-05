@@ -27,7 +27,17 @@ const Message = ({role, content}) => {
             </div>
           </div>
           {
-            
+            role === 'user' ?
+            (
+                <span className='text-white/90'>{content}</span>
+            )
+            :
+            (
+                <>
+                <Image src={assets.logo_icon} alt='' className='h-9 w-9 p-1 border border-white/15 rounded-full'/>
+                <div className='space-y-4 w-full overflow-scroll'>{content}</div>
+                </>
+            )
           }
         </div>
       </div>
