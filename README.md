@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+![image alt](https://github.com/Yelle-stack/deepseek/blob/bc19c186e1de110c5fcc6bd95cc319f1d08f85fa/homeDeepSeek.png)
 ## Getting Started
 
 First, run the development server:
