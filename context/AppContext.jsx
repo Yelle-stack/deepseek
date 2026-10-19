@@ -1,5 +1,6 @@
 "use client"
 import { useAuth, useUser } from "@clerk/nextjs";
+import axios from "axios";
 import { createContext, useContext, useState } from "react";
 
 export const AppContext = createContext();
@@ -20,6 +21,18 @@ export const AppContextProvider = ({children})=>{
             if(!user) return null;
 
             const token = await getToken();
+
+            await axios.post('/api/chat/create', {}, {headers:{
+                Authorization: `Bearer ${token}`
+            }})
+        } catch (error) {
+            
+        }
+     }
+
+     const fetchUsersChats = async ()=>{
+        try {
+            
         } catch (error) {
             
         }
