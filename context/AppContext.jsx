@@ -1,6 +1,6 @@
 "use client"
-import { useUser } from "@clerk/nextjs";
-import { createContext, useContext } from "react";
+import { useAuth, useUser } from "@clerk/nextjs";
+import { createContext, useContext, useState } from "react";
 
 export const AppContext = createContext();
 
@@ -10,6 +10,20 @@ export const useAppContext = ()=>{
 
 export const AppContextProvider = ({children})=>{
      const {user} = useUser()
+     const {getToken} = useAuth()
+
+     const [chats, setChats] = useState([]);
+     const [selectedChat, setSelectedChat] = useState(null);
+
+     const createNewChat = async ()=>{
+        try {
+            if(!user) return null;
+
+            const token = await getToken();
+        } catch (error) {
+            
+        }
+     }
 
      const value = {
         user
