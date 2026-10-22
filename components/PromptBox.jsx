@@ -26,6 +26,15 @@ const PromptBox = ({setIsLoading, isLoading}) => {
           }
 
           // saving user prompt in chats array
+
+          setChats((prevChats)=> prevChats.map((chat)=> chat._id === selectedChat._id ? 
+          {
+            ...chat,
+            messages: [...chat.messages, userPrompt]
+          }: chat
+        ))
+        // saving user prompt in selected chat
+
         } catch (error) {
           
         }
