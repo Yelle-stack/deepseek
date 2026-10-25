@@ -83,8 +83,8 @@ const PromptBox = ({ setIsLoading, isLoading }) => {
         setSelectedChat((prev) => ({ ...prev, messages: [...prev.messages, assistantMessage] }));
 
         await typeMessage(data.data.content, chatId);
-      } else {
-        toast.error(data.message);
+        } else {
+        toast.error(data.message || data.error || 'Une erreur est survenue');
         setPrompt(promptCopy);
       }
     } catch (error) {
