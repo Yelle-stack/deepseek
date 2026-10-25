@@ -33,35 +33,25 @@ export const AppContextProvider = ({children})=>{
         }
      }
 
-     const fetchUsersChats = async ()=>{
-        try {
-            const token = await getToken();
-            const {data} = await axios.get('/api/chat/get', {headers:{
-                Authorization: `Bearer ${token}`
-            }})
-            if(data.success){
-                console.log(data.data);
-                setChats(data.data)
+     const fetchUsersChats = async () => {
+  try {
+    const token = await getToken();
+    const { data } = await axios.get('/api/chat/get', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!data.success) return toast.error(data.message);
 
-                // If the user has no chats, create one
-                if(data.data.length === 0){
-                    await createNewChat();
-                    return fetchUsersChats();
-                }else{
-                    // sort chats by updated date
-                    data.data.sort((a, b)=> new Date(b.updatedAt) - new Date(a.updatedAt));
-
-                    // set recently updated chat as selected chat
-                    setSelectedChat(data.data[0]);
-                    console.log(data.data[0]);
-                }
-            }else{
-                toast.error(data.message)
-            }
-        } catch (error) {
-             toast.error(error.message)
-        }
-     }
+    if (data.data.length === 0) {
+      await createNewChat(); // il rappelle fetchUsersChats lui-même
+      return;
+    }
+    const sorted = [...data.data].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    setChats(sorted);
+    setSelectedChat(sorted[0]);
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
 
      useEffect(()=>{
        if(user){
