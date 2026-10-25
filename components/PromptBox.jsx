@@ -6,6 +6,13 @@ import Image from 'next/image';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
+// Transforme un message d'erreur technique en message lisible
+const friendlyError = (msg) => {
+  if (!msg) return 'Une erreur est survenue';
+  if (msg.includes('402')) return 'Le service est momentanément indisponible (crédit épuisé).';
+  return msg;
+};
+
 const PromptBox = ({ setIsLoading, isLoading }) => {
   const [prompt, setPrompt] = useState('');
   const { user, setChats, selectedChat, setSelectedChat } = useAppContext();
@@ -83,12 +90,12 @@ const PromptBox = ({ setIsLoading, isLoading }) => {
         setSelectedChat((prev) => ({ ...prev, messages: [...prev.messages, assistantMessage] }));
 
         await typeMessage(data.data.content, chatId);
-        } else {
-        toast.error(data.message || data.error || 'Une erreur est survenue');
+      } else {
+        toast.error(friendlyError(data.message || data.error));
         setPrompt(promptCopy);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
+      toast.error(friendlyError(error.response?.data?.message || error.response?.data?.error || error.message));
       setPrompt(promptCopy);
     } finally {
       setIsLoading(false);
