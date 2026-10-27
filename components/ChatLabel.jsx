@@ -3,6 +3,7 @@ import { useAppContext } from '@/context/AppContext'
 import axios from 'axios'
 import Image from 'next/image'
 import React from 'react'
+import toast from 'react-hot-toast'
 
 const ChatLabel = ({openMenu, setOpenMenu, id, name}) => {
 
@@ -33,9 +34,17 @@ const ChatLabel = ({openMenu, setOpenMenu, id, name}) => {
     try {
       const confirm = window.confirm('Are you sure you want to delete this chat?')
       if(!confirm) return
-      const {data} = await axios.post()
+      const {data} = await axios.post('/api/chat/delete', {chatId: id})
+      if(data.success){
+        fetchUsersChats()
+        setOpenMenu({ id: 0, open: false})
+        toast.success(data.message)
+      }
+      else{
+        toast.error(data.message)
+      }
     } catch (error) {
-      
+      toast.error(error.message)
     }
   }
 
